@@ -62,7 +62,7 @@ def archive_group(groupName, mode="update"):
     else:
         print("You have specified an invalid mode (" + mode + ").")
         print("Valid modes are:\nupdate - add any new messages to the archive\nretry - attempt to get all messages that are not in the archive\nrestart - delete archive and start from scratch")
-        sys.exit()
+        sys.exit(1)
 
     if not os.path.exists(groupName):
         os.makedirs(groupName)
@@ -84,6 +84,9 @@ def archive_group(groupName, mode="update"):
                     print("Exiting due to too many consecutive failures.")
                     sys.exit(1)
                 time.sleep(1)
+        elif mode == "retry":
+            # Reset fail count when retrying
+            consecutive_fail_count = 0
 
     log("Archive finished, archived " + str(msgsArchived) + ", time taken is " + str(time.time() - startTime) + " seconds", groupName)
 
