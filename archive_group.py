@@ -103,8 +103,13 @@ def group_messages_max(groupName):
 
 
 def archive_message(groupName, msgNumber):
+    url = 'https://groups.yahoo.com/api/v1/groups/' + groupName + '/messages/' + str(msgNumber) + '/raw'
+    cookies = {'T': cookie_T, 'Y': cookie_Y}
     s = requests.Session()
-    resp = s.get('https://groups.yahoo.com/api/v1/groups/' + groupName + '/messages/' + str(msgNumber) + '/raw', cookies={'T': cookie_T, 'Y': cookie_Y})
+    try:
+        resp = s.get(url, cookies=cookies, timeout=30)
+    except Exception as e:
+        return 500
     basename = groupName + "/" + str(msgNumber)
     if resp.status_code == 200:
         msgJson = resp.text
