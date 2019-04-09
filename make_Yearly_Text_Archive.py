@@ -108,9 +108,11 @@ if os.path.exists(groupName):
          os.makedirs(archiveDir)
     os.chdir(groupName)
     for file in natsorted(os.listdir(os.getcwd())):
-         messageYear = getYahooMessageYear(file)
-         archiveFile = archiveDir + '/archive-' + str(messageYear) + '.txt'
-         archiveYahooMessage(file, archiveFile, messageYear, 'utf-8')
+         extension = os.path.splitext(file)[1]
+         if extension == 'json'
+             messageYear = getYahooMessageYear(file)
+             archiveFile = archiveDir + '/archive-' + str(messageYear) + '.txt'
+             archiveYahooMessage(file, archiveFile, messageYear, 'utf-8')
 else:
      sys.exit('Please run archive-group.py first')
 
